@@ -1,5 +1,7 @@
 import { useEffect, useState } from "react";
 import Flashcard from "../components/Flashcard";
+import { getAllQuestions } from "../api/trivia-api";
+import CorrectAnswers from "./CorrectAnswers";
 
 export default function FlashcardList() {
   const [cards, setCards] = useState([]);
@@ -18,33 +20,31 @@ export default function FlashcardList() {
   }
 
   useEffect(() => {
-    const fetchQuestions = async () => {
-      try {
-        const api = await fetch(
-          `https://the-trivia-api.com/v2/questions?limit=10`
-        );
-        const data = await api.json();
-        console.log(data);
-
-        const formattedCards = data.map((fc, i) => {
-          const allAnswers = [...fc.incorrectAnswers, fc.correctAnswer];
-          const shuffledAnswers = shuffleArray(allAnswers);
-
-          return {
-            id: fc.id || i,
-            question: fc.question,
-            correctAnswer: fc.correctAnswer,
-            answers: shuffledAnswers,
-          };
-        });
-
-        setCards(formattedCards);
-      } catch (error) {
-        console.error("Failed to fetch questions", error);
-      }
-    };
-    fetchQuestions();
+    fetchData();
   }, []);
+
+  const fetchData = async () => {
+    try {
+      const data = await getAllQuestions();
+      console.log(data);
+
+      const formattedCards = data.map((fc, i) => {
+        const allAnswers = [...fc.incorrectAnswers, fc.correctAnswer];
+        const shuffledAnswers = shuffleArray(allAnswers);
+
+        return {
+          id: fc.id || i,
+          question: fc.question,
+          correctAnswer: fc.correctAnswer,
+          answers: shuffledAnswers,
+        };
+      });
+
+      setCards(formattedCards);
+    } catch (error) {
+      console.error("Failed to fetch questions", error);
+    }
+  };
 
   const handleAnswer = (answer) => {
     if (selectedAnswer !== null) return; // Prevent multiple clicks
@@ -56,7 +56,6 @@ export default function FlashcardList() {
       setScore((prev) => prev + 1);
     }
 
-    // Wait 1.5s before moving to next question
     setTimeout(() => {
       const nextIndex = currentIndex + 1;
       if (nextIndex < cards.length) {
@@ -71,19 +70,21 @@ export default function FlashcardList() {
   if (finished) {
     return (
       <div>
-        <h3 className="font-bold text-xl mb-8 bg-yellow-700 text-white p-3 rounded-3xl text-center border-4">
+        <h3 className="font-bold text-xl mb-8 bg-yellow-700 text-white p-3 rounded-full text-center border-4 border-yellow-500">
           Your Score: {score}/ {cards.length}
         </h3>
+        <CorrectAnswers cards={cards} />
         <button
           onClick={() => {
             setCurrentIndex(0);
             setScore(0);
             setFinished(false);
             setSelectedAnswer(null);
+            fetchData();
           }}
-          className="bg-black text-white hover:bg-yellow-800 p-3 px-7 text-lg font-medium rounded-full mx-auto block cursor-pointer"
+          className="mt-7 bg-black text-white hover:bg-yellow-800 p-3 px-7 text-lg font-medium rounded-full mx-auto block cursor-pointer"
         >
-          Restart
+          Start New Quiz
         </button>
       </div>
     );
@@ -94,7 +95,7 @@ export default function FlashcardList() {
       {/* {cards?.map((card) => (
         <Flashcard key={card.id} card={card} onAnswer={handleAnswer} />
       ))} */}
-      <h3 className="inline-block mx-auto mb-7 py-2 px-5 font-bold text-xl bg-yellow-700 text-white rounded-3xl text-center border-4 border-yellow-500">
+      <h3 className="inline-block mx-auto mb-7 py-2 px-5 font-bold text-xl bg-yellow-700 text-white rounded-full text-center border-4 border-yellow-500">
         Current Score: {score} / {cards.length}
       </h3>
       <div className="bg-yellow-500 p-10 md:p-15 px-6 md:p-10 rounded-2xl">
