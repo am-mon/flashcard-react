@@ -71,7 +71,7 @@ export default function FlashcardList() {
     return (
       <div>
         <h3 className="font-bold text-xl mb-8 bg-yellow-700 text-white p-3 rounded-full text-center border-4 border-yellow-500">
-          Your Score: {score}/ {cards.length}
+          Your Score: {score} / {cards.length}
         </h3>
         <CorrectAnswers cards={cards} />
         <button
