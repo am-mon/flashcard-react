@@ -8,6 +8,15 @@ export default function FlashcardList() {
   const [finished, setFinished] = useState(false);
   const [selectedAnswer, setSelectedAnswer] = useState(null);
 
+  function shuffleArray(array) {
+    const newArray = [...array];
+    for (let i = newArray.length - 1; i > 0; i--) {
+      const j = Math.floor(Math.random() * (i + 1));
+      [newArray[i], newArray[j]] = [newArray[j], newArray[i]];
+    }
+    return newArray;
+  }
+
   useEffect(() => {
     const fetchQuestions = async () => {
       try {
@@ -19,7 +28,7 @@ export default function FlashcardList() {
 
         const formattedCards = data.map((fc, i) => {
           const allAnswers = [...fc.incorrectAnswers, fc.correctAnswer];
-          const shuffledAnswers = allAnswers.sort(() => Math.random() - 0.5);
+          const shuffledAnswers = shuffleArray(allAnswers);
 
           return {
             id: fc.id || i,
