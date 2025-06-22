@@ -94,7 +94,7 @@ export default function FlashcardList() {
       {/* {cards?.map((card) => (
         <Flashcard key={card.id} card={card} onAnswer={handleAnswer} />
       ))} */}
-      <h3 className="inline-block mx-auto mb-8 py-4 px-5 font-bold text-xl bg-yellow-700 text-white rounded-3xl text-center border-4">
+      <h3 className="inline-block mx-auto mb-7 py-2 px-5 font-bold text-xl bg-yellow-700 text-white rounded-3xl text-center border-4 border-yellow-500">
         Current Score: {score} / {cards.length}
       </h3>
       <div className="bg-yellow-500 p-10 md:p-15 px-6 md:p-10 rounded-2xl">
