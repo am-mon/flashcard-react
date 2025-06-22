@@ -1,7 +1,15 @@
 import React from "react";
-import FlashcardList from "../components/FlashcardList";
+import { categories } from "../api/categories";
+import CategoryTabs from "../components/CategoryTabs";
+import { useNavigate } from "react-router-dom";
 
 export default function Home() {
+  const navigate = useNavigate();
+
+  const handleCategorySelect = (category) => {
+    navigate(`/questions/${category}`);
+  };
+
   return (
     <div className="max-w-[800px] mx-auto px-4 py-10 md:py-20">
       <h1
@@ -10,9 +18,11 @@ export default function Home() {
       >
         Flashcard Quiz Fun
       </h1>
-      <div>
-        <FlashcardList />
-      </div>
+      <CategoryTabs
+        categories={categories}
+        selectedCategory="all"
+        onSelectCategory={handleCategorySelect}
+      />
       <footer className="text-center my-6 md:my-10 text-zinc-700">
         © 2025 Mon. Learned React.
       </footer>

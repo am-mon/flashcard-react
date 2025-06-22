@@ -8,6 +8,7 @@ import {
 } from "react-router-dom";
 import ReactGA from "react-ga4";
 import Home from "./pages/Home";
+import QuizPage from "./pages/QuizPage";
 
 const TRACKING_ID = "G-94GW5V8X1Q";
 
@@ -33,7 +34,7 @@ function App() {
     <BrowserRouter>
       <Routes>
         <Route path="/" element={<Home />} />
-        <Route path="*" element={<Navigate to="/" replace />} />
+        <Route path="/quiz/:categories" element={<QuizPage />} />
       </Routes>
     </BrowserRouter>
   );

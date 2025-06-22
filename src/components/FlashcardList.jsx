@@ -1,14 +1,15 @@
 import { useEffect, useState } from "react";
 import Flashcard from "../components/Flashcard";
-import { getAllQuestions } from "../api/trivia-api";
 import CorrectAnswers from "./CorrectAnswers";
+import { useNavigate } from "react-router-dom";
 
-export default function FlashcardList() {
+export default function FlashcardList({ data, reloadQuestions }) {
   const [cards, setCards] = useState([]);
   const [currentIndex, setCurrentIndex] = useState(0);
   const [score, setScore] = useState(0);
   const [finished, setFinished] = useState(false);
   const [selectedAnswer, setSelectedAnswer] = useState(null);
+  const navigate = useNavigate();
 
   function shuffleArray(array) {
     const newArray = [...array];
@@ -20,34 +21,25 @@ export default function FlashcardList() {
   }
 
   useEffect(() => {
-    fetchData();
-  }, []);
+    if (!data || data.length === 0) return;
 
-  const fetchData = async () => {
-    try {
-      const data = await getAllQuestions();
-      console.log(data);
+    const formattedCards = data.map((fc, i) => {
+      const allAnswers = [...fc.incorrectAnswers, fc.correctAnswer];
+      const shuffledAnswers = shuffleArray(allAnswers);
 
-      const formattedCards = data.map((fc, i) => {
-        const allAnswers = [...fc.incorrectAnswers, fc.correctAnswer];
-        const shuffledAnswers = shuffleArray(allAnswers);
+      return {
+        id: fc.id || i,
+        question: fc.question,
+        correctAnswer: fc.correctAnswer,
+        answers: shuffledAnswers,
+      };
+    });
 
-        return {
-          id: fc.id || i,
-          question: fc.question,
-          correctAnswer: fc.correctAnswer,
-          answers: shuffledAnswers,
-        };
-      });
-
-      setCards(formattedCards);
-    } catch (error) {
-      console.error("Failed to fetch questions", error);
-    }
-  };
+    setCards(formattedCards);
+  }, [data]);
 
   const handleAnswer = (answer) => {
-    if (selectedAnswer !== null) return; // Prevent multiple clicks
+    if (selectedAnswer !== null) return;
 
     setSelectedAnswer(answer);
 
@@ -67,6 +59,20 @@ export default function FlashcardList() {
     }, 2000);
   };
 
+  const handleRetry = async () => {
+    if (reloadQuestions) {
+      await reloadQuestions();
+    }
+    setCurrentIndex(0);
+    setScore(0);
+    setFinished(false);
+    setSelectedAnswer(null);
+  };
+
+  if (!data || data.length === 0) {
+    return <p className="text-center mt-10 text-xl">No questions available.</p>;
+  }
+
   if (finished) {
     return (
       <div>
@@ -74,18 +80,20 @@ export default function FlashcardList() {
           Your Score: {score} / {cards.length}
         </h3>
         <CorrectAnswers cards={cards} />
-        <button
-          onClick={() => {
-            setCurrentIndex(0);
-            setScore(0);
-            setFinished(false);
-            setSelectedAnswer(null);
-            fetchData();
-          }}
-          className="mt-7 bg-black text-white hover:bg-yellow-800 p-3 px-7 text-lg font-medium rounded-full mx-auto block cursor-pointer"
-        >
-          Start New Quiz
-        </button>
+        <div className="mt-7 flex flex-col md:flex-row items-center justify-center gap-2">
+          <button
+            onClick={handleRetry}
+            className="bg-yellow-700 text-white hover:bg-yellow-900 p-3 px-7 text-lg font-medium rounded-full cursor-pointer"
+          >
+            Load New Questions
+          </button>
+          <button
+            onClick={() => navigate("/")}
+            className="bg-yellow-700 text-white hover:bg-yellow-900 p-3 px-7 text-lg font-medium rounded-full cursor-pointer"
+          >
+            Select Another Topic
+          </button>
+        </div>
       </div>
     );
   }
