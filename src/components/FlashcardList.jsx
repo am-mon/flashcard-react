@@ -81,24 +81,24 @@ export default function FlashcardList() {
   }
 
   return (
-    <div className="">
+    <div className="text-center">
       {/* {cards?.map((card) => (
         <Flashcard key={card.id} card={card} onAnswer={handleAnswer} />
       ))} */}
-
-      <h3 className="font-bold text-xl mb-8 bg-yellow-700 text-white p-3 rounded-3xl text-center border-4">
+      <h3 className="inline-block mx-auto mb-8 py-4 px-5 font-bold text-xl bg-yellow-700 text-white rounded-3xl text-center border-4">
         Current Score: {score} / {cards.length}
       </h3>
-
-      {cards.length > 0 && (
-        <Flashcard
-          key={cards[currentIndex].id}
-          card={cards[currentIndex]}
-          onAnswer={handleAnswer}
-          selectedAnswer={selectedAnswer}
-          index={currentIndex}
-        />
-      )}
+      <div className="bg-yellow-500 p-10 md:p-15 px-6 md:p-10 rounded-2xl">
+        {cards.length > 0 && (
+          <Flashcard
+            key={cards[currentIndex].id}
+            card={cards[currentIndex]}
+            onAnswer={handleAnswer}
+            selectedAnswer={selectedAnswer}
+            index={currentIndex}
+          />
+        )}
+      </div>
     </div>
   );
 }

@@ -4,7 +4,7 @@ export default function Flashcard({ card, onAnswer, selectedAnswer, index }) {
   return (
     <>
       <div className="">
-        <h3 className="text-lg md:text-xl font-bold mb-5 text-center md:mt-10">
+        <h3 className="mb-5 text-lg md:text-2xl font-bold text-center">
           Q{index + 1}. {card.question?.text}
         </h3>
         {/* {card.correctAnswer} */}
