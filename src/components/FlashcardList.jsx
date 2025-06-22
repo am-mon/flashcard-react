@@ -87,12 +87,6 @@ export default function FlashcardList({ data, reloadQuestions }) {
           >
             Load New Questions
           </button>
-          <button
-            onClick={() => navigate("/")}
-            className="bg-yellow-700 text-white hover:bg-yellow-900 p-3 px-7 text-lg font-medium rounded-full cursor-pointer"
-          >
-            Select Another Topic
-          </button>
         </div>
       </div>
     );

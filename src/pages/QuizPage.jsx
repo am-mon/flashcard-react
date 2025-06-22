@@ -3,6 +3,8 @@ import { useParams } from "react-router-dom";
 import { getAllQuestions, getQuestionsByCategory } from "../api/trivia-api";
 import FlashcardList from "../components/FlashcardList";
 import Loader from "../components/Loader";
+import { Link } from "react-router-dom";
+import { IoFilterSharp } from "react-icons/io5";
 
 export default function QuizPage() {
   const { categories } = useParams(); // e.g., "history,music"
@@ -45,6 +47,15 @@ export default function QuizPage() {
         </span>{" "}
         {categories.replaceAll(",", ", ").replaceAll("_", " ")}
       </h1>
+
+      <div className="mb-5 flex justify-center">
+        <Link
+          to="/"
+          className="inline-flex items-center px-3 py-1 bg-amber-600 text-white rounded-full hover:bg-amber-800 font-semibold"
+        >
+          <IoFilterSharp className="mr-2" /> Change Categories?
+        </Link>
+      </div>
 
       {questions.length === 0 ? (
         <p className="text-center my-20 text-xl">No questions found.</p>
