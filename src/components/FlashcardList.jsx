@@ -98,7 +98,7 @@ export default function FlashcardList() {
       <h3 className="inline-block mx-auto mb-7 py-2 px-5 font-bold text-xl bg-yellow-700 text-white rounded-full text-center border-4 border-yellow-500">
         Current Score: {score} / {cards.length}
       </h3>
-      <div className="bg-yellow-500 p-10 md:p-15 px-6 md:p-10 rounded-2xl">
+      <div className="bg-yellow-500 p-10 px-6 md:py-15 md:px-10 rounded-2xl">
         {cards.length > 0 && (
           <Flashcard
             key={cards[currentIndex].id}

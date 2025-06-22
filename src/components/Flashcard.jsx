@@ -3,7 +3,7 @@ import React from "react";
 export default function Flashcard({ card, onAnswer, selectedAnswer, index }) {
   return (
     <>
-      <div className="">
+      <div>
         <h3 className="mb-5 text-lg md:text-2xl font-bold text-center">
           Q{index + 1}. {card.question?.text}
         </h3>
