@@ -37,7 +37,7 @@ export default function QuizPage() {
   }
 
   return (
-    <div className="max-w-[800px] mx-auto px-4 py-10 md:py-20">
+    <div className="max-w-[800px] mx-auto">
       <h1 className="mb-8 md:mb-10 font-bold text-3xl md:text-4xl text-center text-yellow-700">
         <span
           className="text-yellow-500"

@@ -39,10 +39,10 @@ export default function CategoryTabs() {
             <button
               key={cat}
               onClick={() => handleSelect(cat)}
-              className={`px-4 py-2 rounded-full font-semibold ${
+              className={`px-4 py-2 rounded-full font-semibold cursor-pointer ${
                 selectedCategory.includes(cat)
-                  ? "bg-yellow-500 text-yellow-900"
-                  : "bg-yellow-300 text-yellow-800 hover:bg-yellow-400"
+                  ? "bg-yellow-700 text-white"
+                  : "bg-yellow-300 text-yellow-800 hover:bg-yellow-700 hover:text-white"
               }`}
             >
               {cat.replaceAll("_", " ")}
@@ -52,10 +52,10 @@ export default function CategoryTabs() {
         <div className="grid md:grid-cols-2 mt-2">
           <button
             onClick={() => handleSelect("all")}
-            className={`px-4 py-2 rounded-full font-semibold ${
+            className={`px-4 py-2 rounded-full font-semibold cursor-pointer ${
               selectedCategory.includes("all")
-                ? "bg-yellow-500 text-yellow-900"
-                : "bg-yellow-300 text-yellow-800 hover:bg-yellow-400"
+                ? "bg-yellow-700 text-white"
+                : "bg-yellow-300 text-yellow-800 hover:bg-yellow-700 hover:text-white"
             } `}
           >
             All Categories
@@ -66,7 +66,7 @@ export default function CategoryTabs() {
       {selectedCategory.length > 0 && (
         <button
           onClick={handleStart}
-          className="mt-7 px-6 py-2 text-xl bg-yellow-700 text-white rounded-full font-bold hover:bg-yellow-800"
+          className="mt-7 px-6 py-2 text-xl bg-yellow-700 text-white rounded-full font-bold hover:bg-yellow-900 cursor-pointer"
         >
           Start Quiz
         </button>

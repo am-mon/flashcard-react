@@ -75,8 +75,8 @@ export default function FlashcardList({ data, reloadQuestions }) {
 
   if (finished) {
     return (
-      <div>
-        <h3 className="font-bold text-xl mb-8 bg-yellow-700 text-white p-3 rounded-full text-center border-4 border-yellow-500">
+      <div className="text-center">
+        <h3 className="inline-block mx-auto mb-7 py-2 px-5 font-bold text-xl bg-yellow-700 text-white rounded-full text-center border-4 border-yellow-500">
           Your Score: {score} / {cards.length}
         </h3>
         <CorrectAnswers cards={cards} />
